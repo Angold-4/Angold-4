@@ -5,57 +5,63 @@
 #### Example
 ```python
 # gb_fibonacci.py
-
 import Complexity
 
 
-def bad_fibonacci(n):
-    """return the No.n fibonacci number
-
-    it is bad code
-    """
-    if n <= 1:
-        return n
+def normal_power(x, n):
+    """Complexity: O(n)"""
+    if n == 0:
+        return 1
     else:
-        return bad_fibonacci(n-1) + bad_fibonacci(n-2)
+        return x * normal_power(x, n-1)
 
 
-def good_fibonacci(n):
-    """return pair of fibonacci numbers, F(n) and F(n-1)
-
-    it is good code:)
-    """
-    if n <= 1:
-        return (n, 0)
+def power(x, n):
+    """Complexity: O(log n)"""
+    if n == 0:
+        return 1
     else:
-        (a, b) = good_fibonacci(n-1)
-        return(a+b, a)
+        partial = power(x, n // 2)
+        result = partial * partial
+        if n % 2 == 1:
+            result *= x
+        return result
 
 ```
 **If We Use Complexity. We will get that Table:<br>**
 
-![Complexity](Sources/Compare.png)
+![Complexity](Sources/pcompare.png)
 
-**Reflects the relationship between the time complexity and parameter size of different functions**
+**And Also each of them:**
 
+![Power1](Sources/power1.png)
+**normal_power(Complexity: O(n))**
+
+![Power2](Sources/power2.png)
+**power(Complexity: O(log n))**
+
+
+**Reflects the relationship between the time complexity and parameter size of different functions<br>**
 
 
 #### Interface
 
+
 ```python
-bf = Complexity.Complexity(bad_fibonacci)
-bf.set_first_element(1)
-bf.set_test_range(0, 30, 1)
-bf.statistics()
-bf.draw()
+np = Complexity.Complexity(normal_power)
+np.set_first_element(2)
+np.set_second_element(1)
+np.set_test_range(1, 300, 1)
+np.average(1000)
+np.draw()
 
-gf = Complexity.Complexity(good_fibonacci)
-gf.set_first_element(1)
-gf.set_test_range(0, 30, 1)
-gf.statistics()
-gf.draw()
+p = Complexity.Complexity(power)
+p.set_first_element(2)
+p.set_second_element(1)
+p.set_test_range(1, 300, 1)
+p.average(1000)
+p.draw()
 
-Complexity.Compare(bf, gf)
+Complexity.Compare(np, p)
 
 ```
-
